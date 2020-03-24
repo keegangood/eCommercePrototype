@@ -1,12 +1,14 @@
-from django.shortcuts import render
 from .serializers import ProductSerializer, CategorySerializer
 from .models import Product, Category
-from rest_framework.decorators import api_view
+from rest_framework import viewsets
 from rest_framework.response import Response
+from rest_framework import permissions
 
-@api_view()
-def shop(request):
-    products = Product.objects.all()
-    categories = Category.objects.all()
-    return Response({'products': products, 'categories':categories})
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
 
